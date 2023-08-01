@@ -1,6 +1,6 @@
 package com.azuremichael.todoapp.web.rest.v1.builders;
 
-import com.azuremichael.todoapp.models.ToDoItem;
+import com.azuremichael.todoapp.models.AdvancedToDoItem;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +12,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ToDoItemResponseBuilder {
 
-    public ResponseEntity<ToDoItem> ok(ToDoItem toDoItem) {
-        return ResponseEntity.ok(toDoItem);
+    public ResponseEntity<AdvancedToDoItem> ok(AdvancedToDoItem toDo) {
+        return ResponseEntity.ok(toDo);
     }
 
-    public ResponseEntity<List<ToDoItem>> ok(List<ToDoItem> toDoItems) {
+    public ResponseEntity<List<AdvancedToDoItem>> ok(List<AdvancedToDoItem> toDoItems) {
         return ResponseEntity.ok(toDoItems);
     }
 
@@ -24,7 +24,7 @@ public class ToDoItemResponseBuilder {
         return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<ToDoItem> save(ToDoItem toDoItem) {
+    public ResponseEntity<AdvancedToDoItem> save(AdvancedToDoItem toDoItem) {
         return ResponseEntity.status(HttpStatus.CREATED).body(toDoItem);
     }
  }
