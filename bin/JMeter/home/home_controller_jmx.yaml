@@ -1,0 +1,23 @@
+execution:
+  - concurrency: 5
+    ramp-up: 20s
+    hold-for: 2m
+    scenario: HomeControllerScenario
+
+scenarios:
+  HomeControllerScenario:
+    timeout: 5s
+    retrieve-resources: false
+    store-cache: true
+    store-cookie: false
+    default-address: http://localhost:8080
+    requests:
+      - url: /
+        method: GET
+      - url: /1
+        method: GET
+      - url: /
+        method: POST
+        headers:
+          Content-Type: application/json
+        body-file: ./json-bodies/todo-item.json
