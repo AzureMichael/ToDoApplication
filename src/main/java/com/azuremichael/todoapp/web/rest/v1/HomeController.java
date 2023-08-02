@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -53,11 +52,23 @@ public class HomeController {
                 .thenReturn(toDoItemResponseBuilder.deleted());
     }
 
-    @PatchMapping("/")
-    public Mono<ResponseEntity<AdvancedToDoItem>>patch(@RequestBody JsonPatch jsonPatch) throws JsonPatchException, JsonProcessingException {
-        
-        return toDoItemService.updateToDoItem(jsonPatch)
-        		.map(toDoItem -> toDoItemResponseBuilder.ok(toDoItem));
+
+    @PatchMapping(path = "/", consumes = "application/json-patch+json")
+    public Mono<ResponseEntity<AdvancedToDoItem>> patch(@RequestBody JsonPatch jsonPatch) throws JsonPatchException, JsonProcessingException {
+        AdvancedToDoItem toDoItem = AdvancedToDoItem.builder()
+                .uuid(UUID.randomUUID())
+                .types(List.of(UUID.randomUUID(), UUID.randomUUID()))
+                .build();
+        toDoItem.setChildren(List.of(AdvancedToDoItem.builder().build()));
+        toDoItem.setDescription("Description");
+        toDoItem.setIsComplete(false);
+
+        AdvancedToDoItem newItem = applyPatchToToDoItem(jsonPatch, toDoItem);
+
+        log.info(String.valueOf(toDoItem));
+        log.warn(String.valueOf(newItem));
+
+        return Mono.just(ResponseEntity.ok(newItem));
     }
 
 }
