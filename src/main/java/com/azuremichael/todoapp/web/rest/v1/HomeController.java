@@ -63,12 +63,8 @@ public class HomeController {
         toDoItem.setDescription("Description");
         toDoItem.setIsComplete(false);
 
-        AdvancedToDoItem newItem = applyPatchToToDoItem(jsonPatch, toDoItem);
-
-        log.info(String.valueOf(toDoItem));
-        log.warn(String.valueOf(newItem));
-
-        return Mono.just(ResponseEntity.ok(newItem));
+        return toDoItemService.updateToDoItem(jsonPatch)
+        		.map(toDo -> ResponseEntity.ok(toDo));
     }
 
 }
